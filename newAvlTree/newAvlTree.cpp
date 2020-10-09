@@ -36,7 +36,7 @@ void InsertTree() {
 	string name;
 	do
 	{
-		cout << "\nPlease enter the name you would like to add: (Enter 0 to cancel)\n";
+		cout << "\nPlease enter the item you would like to add: (Enter 0 to cancel)\n";
 		cin >> name;
 		if (name != "0")
 		{
