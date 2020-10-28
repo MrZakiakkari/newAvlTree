@@ -4,7 +4,7 @@
 using namespace std;
 
 
-typedef enum { LeftHigher, EqualHeight, RightHigher } BalanceFactor;
+ enum class BalanceFactor  { LeftHigher, EqualHeight, RightHigher } ;
 bool Located = false;
 
 template <class T>
@@ -76,7 +76,7 @@ void AVLtree<T>::Insert(TreeNode<T>*& tree, T item, bool& taller)
 		tree->leftSubTree = NULL;
 		tree->rightSubTree = NULL;
 		tree->info = item;
-		tree->bf = EqualHeight;
+		tree->bf = BalanceFactor::EqualHeight;
 		taller = true;
 	}
 	else if (item == tree->info)
@@ -88,9 +88,9 @@ void AVLtree<T>::Insert(TreeNode<T>*& tree, T item, bool& taller)
 		{
 			switch (tree->bf)
 			{
-			case LeftHigher: LeftBalance(tree, taller);	break;
-			case EqualHeight: tree->bf = LeftHigher;	break;
-			case RightHigher: tree->bf = EqualHeight;	taller = false; break;
+			case BalanceFactor::LeftHigher: LeftBalance(tree, taller);	break;
+			case BalanceFactor::EqualHeight: tree->bf = BalanceFactor::LeftHigher;	break;
+			case BalanceFactor::RightHigher: tree->bf = BalanceFactor::EqualHeight;	taller = false; break;
 			}
 
 		}
@@ -101,9 +101,9 @@ void AVLtree<T>::Insert(TreeNode<T>*& tree, T item, bool& taller)
 		// Insert into rightSubTree subtree if (taller)
 		switch (tree->bf)
 		{
-		case RightHigher: RightBalance(tree, taller); break;
-		case EqualHeight: tree->bf = RightHigher; break;
-		case LeftHigher: tree->bf = EqualHeight; taller = false; break;
+		case BalanceFactor::RightHigher: RightBalance(tree, taller); break;
+		case BalanceFactor::EqualHeight: tree->bf = BalanceFactor::RightHigher; break;
+		case BalanceFactor::LeftHigher: tree->bf = BalanceFactor::EqualHeight; taller = false; break;
 		}
 	}
 }
@@ -138,12 +138,12 @@ void AVLtree<T>::Search(TreeNode<T>*& tree, T item)
 		else
 		{
 			Located = true;
-			cout << "\n\nName found in tree" << endl;
+			cout << "\n\n "<< item <<" is found in Tree" << endl;
 		}
 	}
 	else
 	{
-		cout << "\n\nName not found in Avl Tree" << endl;
+		cout << "\n\n " << item << " is Not found in Tree" << endl;
 	}
 }
 
@@ -170,14 +170,14 @@ void AVLtree<T>::Delete(TreeNode<T>*& tree, T item, bool& shorter)
 			if (shorter)
 				switch (tree->bf)
 				{
-				case LeftHigher:
-					tree->bf = EqualHeight;
+				case BalanceFactor::LeftHigher:
+					tree->bf = BalanceFactor::EqualHeight;
 					break;
-				case EqualHeight:
-					tree->bf = RightHigher;
+				case BalanceFactor::EqualHeight:
+					tree->bf = BalanceFactor::RightHigher;
 					shorter = false;
 					break;
-				case RightHigher:
+				case BalanceFactor::RightHigher:
 					DelRightBalance(tree, shorter);
 					break;
 				} // END SWITCH
@@ -189,15 +189,15 @@ void AVLtree<T>::Delete(TreeNode<T>*& tree, T item, bool& shorter)
 			if (shorter)
 				switch (tree->bf)
 				{
-				case LeftHigher:
+				case BalanceFactor::LeftHigher:
 					DelLeftBalance(tree, shorter);
 					break;
-				case EqualHeight:
-					tree->bf = LeftHigher;
+				case BalanceFactor::EqualHeight:
+					tree->bf = BalanceFactor::LeftHigher;
 					shorter = false;
 					break;
-				case RightHigher:
-					tree->bf = EqualHeight;
+				case BalanceFactor::RightHigher:
+					tree->bf = BalanceFactor::EqualHeight;
 					break;
 				} // END SWITCH
 		}
@@ -247,14 +247,14 @@ void AVLtree<T>::DeleteNode(TreeNode <T>*& tree, bool& shorter)
 		{
 			switch (tree->bf)
 			{
-			case LeftHigher:
-				tree->bf = EqualHeight;
+			case BalanceFactor::LeftHigher:
+				tree->bf = BalanceFactor::EqualHeight;
 				break;
-			case EqualHeight:
-				tree->bf = RightHigher;
+			case BalanceFactor::EqualHeight:
+				tree->bf = BalanceFactor::RightHigher;
 				shorter = false;
 				break;
-			case RightHigher:
+			case BalanceFactor::RightHigher:
 				DelRightBalance(tree, shorter);
 				break;
 			}
@@ -279,25 +279,25 @@ void DelRightBalance(TreeNode<T>*& tree, bool& shorter)
 	TreeNode<T>* ls;
 	switch (rs->bf)
 	{
-	case RightHigher:	tree->bf = rs->bf = EqualHeight;
+	case BalanceFactor::RightHigher:	tree->bf = rs->bf = BalanceFactor::EqualHeight;
 		RotateLeft(tree);
 		shorter = true; break;
-	case EqualHeight:	tree->bf = RightHigher;
-		rs->bf = LeftHigher;
+	case BalanceFactor::EqualHeight:	tree->bf = BalanceFactor::RightHigher;
+		rs->bf = BalanceFactor::LeftHigher;
 		RotateLeft(tree);
 		shorter = false; break;
-	case LeftHigher:	ls = rs->leftSubTree;
+	case BalanceFactor::LeftHigher:	ls = rs->leftSubTree;
 		switch (ls->bf)
 		{
-		case RightHigher:	tree->bf = LeftHigher;
-			rs->bf = EqualHeight; break;
-		case EqualHeight:	tree->bf = rs->bf = EqualHeight;
+		case BalanceFactor::RightHigher:	tree->bf = BalanceFactor::LeftHigher;
+			rs->bf = BalanceFactor::EqualHeight; break;
+		case BalanceFactor::EqualHeight:	tree->bf = rs->bf = BalanceFactor::EqualHeight;
 			break;
-		case LeftHigher:	tree->bf = EqualHeight;
-			rs->bf = RightHigher; break;
+		case BalanceFactor::LeftHigher:	tree->bf = BalanceFactor::EqualHeight;
+			rs->bf = BalanceFactor::RightHigher; break;
 		} // END SWITCH
 
-		ls->bf = EqualHeight;
+		ls->bf = BalanceFactor::EqualHeight;
 		RotateRight(tree->rightSubTree);
 		RotateLeft(tree);
 		shorter = true;
@@ -311,30 +311,30 @@ void DelLeftBalance(TreeNode<T>*& tree, bool& shorter)
 	TreeNode<T>* rs;
 	switch (ls->bf)
 	{
-	case LeftHigher:
-		tree->bf = ls->bf = EqualHeight;
+	case BalanceFactor::LeftHigher:
+		tree->bf = ls->bf = BalanceFactor::EqualHeight;
 		RotateRight(tree);
 		shorter = true; break;
-	case EqualHeight:
-		tree->bf = LeftHigher;
-		ls->bf = RightHigher;
+	case BalanceFactor::EqualHeight:
+		tree->bf = BalanceFactor::LeftHigher;
+		ls->bf = BalanceFactor::RightHigher;
 		RotateRight(tree);
 		shorter = false; break;
-	case RightHigher:
+	case BalanceFactor::RightHigher:
 		rs = ls->rightSubTree;
 		switch (rs->bf)
 		{
-		case LeftHigher:	tree->bf = RightHigher;
-			ls->bf = EqualHeight; break;
-		case EqualHeight:	tree->bf = ls->bf = EqualHeight;
+		case BalanceFactor::LeftHigher:	tree->bf = BalanceFactor::RightHigher;
+			ls->bf = BalanceFactor::EqualHeight; break;
+		case BalanceFactor::EqualHeight:	tree->bf = ls->bf = BalanceFactor::EqualHeight;
 			break;
-		case RightHigher:	tree->bf = EqualHeight;
-			ls->bf = LeftHigher; break;
+		case BalanceFactor::RightHigher:	tree->bf = BalanceFactor::EqualHeight;
+			ls->bf = BalanceFactor::LeftHigher; break;
 		} // END SWITCH
-		rs->bf = EqualHeight;
+		rs->bf = BalanceFactor::EqualHeight;
 		RotateLeft(tree->leftSubTree);
 		RotateRight(tree);
-		ls->bf = EqualHeight;
+		ls->bf = BalanceFactor::EqualHeight;
 		shorter = true;
 	}
 }
@@ -376,9 +376,9 @@ void AVLtree<T>::Print(TreeNode<T>*& tree)
 
 		switch (tree->bf)
 		{
-		case 0: bf = "Left High "; break;
-		case 1: bf = "Equal High "; break;
-		case 2: bf = "Right High "; break;
+		case BalanceFactor::LeftHigher: bf = "Left High "; break;
+		case BalanceFactor::EqualHeight: bf = "Equal High "; break;
+		case BalanceFactor::RightHigher: bf = "Right High "; break;
 		}
 		cout << "\tBalance Factor: " << bf << "" << endl;
 
@@ -394,28 +394,28 @@ void AVLtree<T>::RightBalance(TreeNode<T>*& tree, bool& taller) {
 
 	switch (rs->bf)
 	{
-	case RightHigher:	tree->bf = rs->bf = EqualHeight;
+	case BalanceFactor::RightHigher:	tree->bf = rs->bf = BalanceFactor::EqualHeight;
 		RotateLeft(tree);
 		taller = false;
 		break;
 
-	case EqualHeight:
+	case BalanceFactor::EqualHeight:
 		cerr << "Tree already BalanceFactord " << endl;
 		break;
-	case LeftHigher:	ls = rs->leftSubTree;
+	case BalanceFactor::LeftHigher:	ls = rs->leftSubTree;
 		switch (ls->bf)
 		{
-		case RightHigher:	tree->bf = LeftHigher;
-			rs->bf = EqualHeight;
+		case BalanceFactor::RightHigher:	tree->bf = BalanceFactor::LeftHigher;
+			rs->bf = BalanceFactor::EqualHeight;
 			break;
-		case EqualHeight:	tree->bf = rs->bf = EqualHeight;
+		case BalanceFactor::EqualHeight:	tree->bf = rs->bf = BalanceFactor::EqualHeight;
 			break;
-		case LeftHigher:	tree->bf = EqualHeight;
-			rs->bf = RightHigher;
+		case BalanceFactor::LeftHigher:	tree->bf = BalanceFactor::EqualHeight;
+			rs->bf = BalanceFactor::RightHigher;
 			break;
 		}
 
-		ls->bf = EqualHeight;
+		ls->bf = BalanceFactor::EqualHeight;
 		RotateRight(tree->rightSubTree);
 		RotateLeft(tree);
 		taller = false;
@@ -430,33 +430,33 @@ void AVLtree<T>::LeftBalance(TreeNode<T>*& tree, bool& taller)
 
 	switch (ls->bf)
 	{
-	case LeftHigher:
-		tree->bf = ls->bf = EqualHeight;
+	case BalanceFactor::LeftHigher:
+		tree->bf = ls->bf = BalanceFactor::EqualHeight;
 		RotateRight(tree);
 		taller = false;
 		break;
 
-	case EqualHeight:
+	case BalanceFactor::EqualHeight:
 		cerr << "Tree already BalanceFactord " << endl;
 		break;
-	case RightHigher:
+	case BalanceFactor::RightHigher:
 		rs = ls->rightSubTree;
 		switch (rs->bf)
 		{
-		case LeftHigher:
-			tree->bf = RightHigher;
-			ls->bf = EqualHeight;
+		case BalanceFactor::LeftHigher:
+			tree->bf = BalanceFactor::RightHigher;
+			ls->bf = BalanceFactor::EqualHeight;
 			break;
-		case EqualHeight:
-			tree->bf = ls->bf = EqualHeight;
+		case BalanceFactor::EqualHeight:
+			tree->bf = ls->bf = BalanceFactor::EqualHeight;
 			break;
-		case RightHigher:
-			tree->bf = EqualHeight;
-			ls->bf = LeftHigher;
+		case BalanceFactor::RightHigher:
+			tree->bf = BalanceFactor::EqualHeight;
+			ls->bf = BalanceFactor::LeftHigher;
 			break;
 		}
 
-		rs->bf = EqualHeight;
+		rs->bf = BalanceFactor::EqualHeight;
 		RotateLeft(tree->leftSubTree);
 		RotateRight(tree);
 		taller = false;

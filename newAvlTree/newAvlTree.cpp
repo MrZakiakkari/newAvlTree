@@ -12,9 +12,9 @@ using namespace std;
 
 const int InsertCode = 1;
 const int PrintCode = 2;
-const int ExitCode = 4;
+const int ExitCode = 5;
 const int PrintMenuCode = 3;
-
+const int SearchCode = 4;
 
 
 void PrintMenu() {
@@ -22,6 +22,7 @@ void PrintMenu() {
 	cout << "Type " << InsertCode << " to insert an item to the AVL Tree" << endl;
 	cout << "Type " << PrintCode << " to print the AVL Tree" << endl;
 	cout << "Type " << PrintMenuCode << " to Print the Menu." << endl;
+	cout << "Type " << SearchCode << " to search an item in the AVL Tree" << endl;
 	cout << "Type " << ExitCode << " To Exit the program." << endl;
 
 }
@@ -49,11 +50,27 @@ void InsertTree() {
 }
 
 void PrintAVLTree() {
-	cout << "PrintAVLTree" << endl;
+	cout << "PrintAVLTree: (Enter 0 to cancel)" << endl;
 	cout << "AVL TREE";
 	avl.PrintTree();
 }
+void SearchTree() {
+	string name;
+	do
+	{
+		cout << "\nPlease enter the name you would like to Search: (Enter 0 to cancel)\n";
+		cin >> name;
+		if (name != "0")
+		{
+			cout << "Searching to see if " << name << " is in the tree " << endl;
+			avl.PrintTree();
+			avl.Contains(name);
 
+		}
+	} while (name != "0");
+	
+
+}
 
 
 void InitializeAvlTree()
@@ -89,6 +106,9 @@ int main()
 			break;
 		case PrintMenuCode:
 			PrintMenu();
+			break;
+		case SearchCode:
+			SearchTree();
 			break;
 		case ExitCode:
 			run = false;
