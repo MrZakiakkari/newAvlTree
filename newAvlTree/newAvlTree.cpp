@@ -12,7 +12,8 @@ using namespace std;
 
 const int InsertCode = 1;
 const int PrintCode = 2;
-const int ExitCode = 5;
+const int ExitCode = 6;
+const int DeleteCode = 5;
 const int PrintMenuCode = 3;
 const int SearchCode = 4;
 
@@ -23,6 +24,7 @@ void PrintMenu() {
 	cout << "Type " << PrintCode << " to print the AVL Tree" << endl;
 	cout << "Type " << PrintMenuCode << " to Print the Menu." << endl;
 	cout << "Type " << SearchCode << " to search an item in the AVL Tree" << endl;
+	cout << "Type " << DeleteCode << " to delete an item in the AVL Tree" << endl;
 	cout << "Type " << ExitCode << " To Exit the program." << endl;
 
 }
@@ -72,14 +74,40 @@ void SearchTree() {
 
 }
 
+void DeleteTree() {
+	string name;
+	do
+	{
+		cout << "\nPlease enter the name you would like to Delete:\n";
+		cin >> name;
+		avl.Contains(name);
+
+		if (Located == true)
+		{
+			cout << "Now deleting " << name << endl;
+			avl.DeleteItem(name);
+		}
+		else if (Located == false)
+		{
+			cout << name << " is Not Found... " << endl;
+		}
+
+		avl.PrintTree();
+	} while (name != "0");
+
+
+}
+
 
 void InitializeAvlTree()
 {
+	/*
 	avl.InsertItem("Mark");
 	avl.InsertItem("Ann");
 	avl.InsertItem("Tom");
 	avl.InsertItem("Sarah");
 	avl.InsertItem("Simon");
+	*/
 }
 
 
@@ -109,6 +137,9 @@ int main()
 			break;
 		case SearchCode:
 			SearchTree();
+			break;
+		case DeleteCode:
+			DeleteTree();
 			break;
 		case ExitCode:
 			run = false;
