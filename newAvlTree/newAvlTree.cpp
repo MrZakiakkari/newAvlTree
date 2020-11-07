@@ -101,13 +101,14 @@ void DeleteTree() {
 
 void InitializeAvlTree()
 {
-	/*
-	avl.InsertItem("Mark");
-	avl.InsertItem("Ann");
+	
 	avl.InsertItem("Tom");
-	avl.InsertItem("Sarah");
-	avl.InsertItem("Simon");
-	*/
+	avl.InsertItem("Ursula");
+	avl.InsertItem("Mary");
+	avl.InsertItem("Zaki");
+	avl.InsertItem("Tim");
+	avl.InsertItem("Amy");
+	
 }
 
 
