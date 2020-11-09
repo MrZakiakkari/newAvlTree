@@ -12,7 +12,8 @@ using namespace std;
 
 const int InsertCode = 1;
 const int PrintCode = 2;
-const int ExitCode = 6;
+const int ExitCode = 7;
+const int clear = 6;
 const int DeleteCode = 5;
 const int PrintMenuCode = 3;
 const int SearchCode = 4;
@@ -25,6 +26,7 @@ void PrintMenu() {
 	cout << "Type " << PrintMenuCode << " to Print the Menu." << endl;
 	cout << "Type " << SearchCode << " to search an item in the AVL Tree" << endl;
 	cout << "Type " << DeleteCode << " to delete an item in the AVL Tree" << endl;
+	cout << "Type " << clear << " clear" << endl;
 	cout << "Type " << ExitCode << " To Exit the program." << endl;
 
 }
@@ -33,7 +35,7 @@ void InValidOption() {
 	PrintMenu();
 }
 
-AVLtree<string> avl;
+AvlTree<string> avl;
 
 void InsertTree() {
 	string name;
@@ -44,7 +46,7 @@ void InsertTree() {
 		if (name != "0")
 		{
 			cout << "Now adding " << name << endl;
-			avl.InsertItem(name);
+			avl.Insert(name);
 			cout << "Item has been added";
 		}
 	} while (name != "0");
@@ -54,22 +56,22 @@ void InsertTree() {
 void PrintAVLTree() {
 	cout << "PrintAVLTree: (Enter 0 to cancel)" << endl;
 	cout << "AVL TREE";
-	avl.PrintTree();
+	cout << avl.ToString();
 }
 void SearchTree() {
 	string name;
-	do
+	while (name != "0")
 	{
 		cout << "\nPlease enter the name you would like to Search: (Enter 0 to cancel)\n";
 		cin >> name;
 		if (name != "0")
 		{
 			cout << "Searching to see if " << name << " is in the tree " << endl;
-			avl.PrintTree();
+			cout<<avl.ToString();
 			avl.Contains(name);
 
 		}
-	} while (name != "0");
+	}
 	
 
 }
@@ -82,32 +84,37 @@ void DeleteTree() {
 		cin >> name;
 		avl.Contains(name);
 
-		if (Located == true)
+		if (avl.Contains(name))
 		{
 			cout << "Now deleting " << name << endl;
-			avl.DeleteItem(name);
+			avl.Remove(name);
 		}
-		else if (Located == false)
+		else
 		{
 			cout << name << " is Not Found... " << endl;
 		}
 
-		avl.PrintTree();
+		cout<<avl.ToString();
 	} while (name != "0");
 
 
+}
+void ClearTree() {
+	
+	avl.Clear();
+	cout << "all cleared" << endl;
 }
 
 
 void InitializeAvlTree()
 {
 	
-	avl.InsertItem("Tom");
-	avl.InsertItem("Ursula");
-	avl.InsertItem("Mary");
-	avl.InsertItem("Zaki");
-	avl.InsertItem("Tim");
-	avl.InsertItem("Amy");
+	avl.Insert("Tom");
+	avl.Insert("Ursula");
+	avl.Insert("Mary");
+	avl.Insert("Zaki");
+	avl.Insert("Tim");
+	avl.Insert("Amy");
 	
 }
 
@@ -141,6 +148,9 @@ int main()
 			break;
 		case DeleteCode:
 			DeleteTree();
+			break;
+		case clear:
+			ClearTree();
 			break;
 		case ExitCode:
 			run = false;
