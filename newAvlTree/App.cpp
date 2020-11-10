@@ -55,7 +55,7 @@ void InsertTree() {
 
 void PrintAVLTree() {
 	cout << "PrintAVLTree: (Enter 0 to cancel)" << endl;
-	cout << "AVL TREE";
+	cout << "AVL TREE" << endl;
 	cout << avl.ToString() << endl;
 }
 void SearchTree() {
