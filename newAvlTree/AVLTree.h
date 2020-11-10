@@ -30,7 +30,7 @@ template<class T> AvlTree<T>::~AvlTree() { }
 #pragma endregion
 template<class T> void AvlTree<T>::Clear()
 {
-	root = NULL;
+	root = NULL;//Lazy way, memoery not recoved
 }
 template<class T> bool AvlTree<T>::Contains(T candidate)
 {

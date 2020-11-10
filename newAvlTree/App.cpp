@@ -56,7 +56,7 @@ void InsertTree() {
 void PrintAVLTree() {
 	cout << "PrintAVLTree: (Enter 0 to cancel)" << endl;
 	cout << "AVL TREE";
-	cout << avl.ToString();
+	cout << avl.ToString() << endl;
 }
 void SearchTree() {
 	string name;
@@ -67,7 +67,7 @@ void SearchTree() {
 		if (name != "0")
 		{
 			cout << "Searching to see if " << name << " is in the tree " << endl;
-			cout<<avl.ToString();
+			cout<<avl.ToString()<<endl;
 			avl.Contains(name);
 
 		}
@@ -80,7 +80,7 @@ void DeleteTree() {
 	string name;
 	do
 	{
-		cout << "\nPlease enter the name you would like to Delete:\n";
+		cout << "\nPlease enter the name you would like to Delete:(Enter 0 to cancel)\n";
 		cin >> name;
 		avl.Contains(name);
 
@@ -94,7 +94,7 @@ void DeleteTree() {
 			cout << name << " is Not Found... " << endl;
 		}
 
-		cout<<avl.ToString();
+		cout << avl.ToString() << endl;
 	} while (name != "0");
 
 
@@ -109,12 +109,13 @@ void ClearTree() {
 void InitializeAvlTree()
 {
 	
-	avl.Insert("Tom");
+	/*avl.Insert("Tom");
 	avl.Insert("Ursula");
 	avl.Insert("Mary");
 	avl.Insert("Zaki");
 	avl.Insert("Tim");
 	avl.Insert("Amy");
+	*/
 	
 }
 

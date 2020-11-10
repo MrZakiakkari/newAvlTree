@@ -1,3 +1,7 @@
+//Code adapted from GeegForGeegs
+/*https://www.geeksforgeeks.org/avl-tree-set-1-insertion/*/
+/*https://www.geeksforgeeks.org/avl-tree-set-2-deletion/*/
+
 #pragma once
 #include "AvlBalanceFactor.h"
 
